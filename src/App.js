@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+const Api = 'https://api.adviceslip.com/advice';
 
-function App() {
+const App = () => {
+  
+  const [advice, setAdvice] = useState('');
+
+  async function getAdvice(){
+    const res = await fetch(Api);
+    const data = await res.json();
+    setAdvice(data.slip.advice)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='adviceBox'>
+      <h1>Advice!!</h1>
+      <div>
+        <h4>{advice}</h4>
+      </div>
+      <button className='button' onClick={getAdvice}>GET YOUR ADVICE</button>
     </div>
   );
 }
